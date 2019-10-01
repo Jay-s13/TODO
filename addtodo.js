@@ -33,8 +33,11 @@ exports.adder=function(argument,res)
         dbo.collection("tododb").insertOne(query,function(err,result){
             if(err) throw err;
             console.log("Data written succesfully!!!\n");
-            // res.send("Written!!!");
-            res.redirect('/');
+            //res.send('<script>alert("Data written successfully!")</script>');
+            //console.log("Written!!!");
+            res.render('server', {
+                name: 'Data written successfully!'
+              });
         });
     db.close();
     })};

@@ -25,8 +25,9 @@ exports.editter=function(arg,res){var Mongoclient=require('mongodb').MongoClient
                         console.log(result);
                         if(result[0]==null)
                         {
-                            console.log("Record for requested id does not exist!")
-                            res.send("Record for requested id does not exist!");
+                            res.render('server', {
+                                name: 'Record for requested id does not exist.'
+                              });
                         }
                         else
                         {
@@ -40,7 +41,9 @@ exports.editter=function(arg,res){var Mongoclient=require('mongodb').MongoClient
             }
             else
             {   
-                console.log("Please re-enter id: ")
+                res.render('server', {
+                    name: 'Please re-enter id.'
+                  });
                 checkid();
             }
     }
@@ -55,8 +58,9 @@ exports.editter=function(arg,res){var Mongoclient=require('mongodb').MongoClient
         upquery2={$set:{ 'title' : title , 'description' : description , 'time' : date }};
         dbo.collection("tododb").updateOne(upquery1,upquery2,function(err,result){
             if (err) throw err;
-            console.log("Record Updated\n");
-            res.send("Record updated")
+            res.render('server', {
+                name: 'Record updated.'
+              });
         });
         db.close();
     });

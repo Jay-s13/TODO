@@ -2,6 +2,17 @@ const express = require("express");
 const bodyparser = require("body-parser");
 const joi = require("joi");
 const fs = require("fs");
+const hbs=require("hbs");
+const path=require("path");
+
+var show = require("./showtodo");
+var add = require("./addtodo");
+var del = require("./deletetodo");
+var update = require("./edittodo");
+var opt,title,desc;
+
+const pwd=path.join(__dirname,'./');
+const viewpath=path.join(__dirname,'./views')
 
 const schema1 = joi.object().keys({
   _id: joi.number(),
@@ -17,43 +28,37 @@ const schema1 = joi.object().keys({
     .max(30)
     .regex(/^[a-zA-Z0-9]{3,30}$/)
 });
-
 const serv = express();
-var show = require("./showtodo");
-var add = require("./addtodo");
-var del = require("./deletetodo");
-var update = require("./edittodo");
-var opt,title,desc;
+serv.set('view engine','hbs');
+serv.set('views',viewpath);
+serv.use(express.static(pwd));
 serv.use(bodyparser());
 var server = serv.listen(8000, () => console.log("Server Listening!!!"));
 
-serv.get("/", (req, res) => {
-  res.sendFile("/home/js/Desktop/Codes/Todo-Postman/Frontend/Server.html");
+serv.get("", (req, res) => {
+  res.render('server');
   console.log("Server Listening!!!");
 });
-// serv.post("/", (req, res) => {
-// 	title = req.body.Title;
-// 	desc = req.body.Description;
-//   });
 
-serv.get("/show", (req, res) => {
+
+serv.get("/show", (req, resp) => {
   var yoyo;
   show.showdb(function(err, res) {
     yoyo = res;
-  });
-  res.send(yoyo);
+  },resp);
 });
 
 serv.post("/", (req, res) => {
-  //console.log(req.body);
   title = req.body.Title;
   desc = req.body.Description;
   var query = { 'title' : title, 'description' : desc };
   schema1.validate(query, function(err, result) {
-	//if (err === null) add.adder(req.body, res);
     console.log(err);
     if (err === null) add.adder(query, res);
-    else res.send("Please re-check data and resend.");
+    // else res.send('<script>alert("Please re-check data and resend.")</script>');
+    else res.render('server', {
+      name: 'Please re-check data and resend.'
+    });
   });
 });
 
@@ -62,9 +67,10 @@ serv.post("/del", (req, res) => {
   var query = {"_id" : id}
   schema1.validate(query, function(err, result) {
     if (err === null) del.deleterec(query, res);
-    else res.send("Please re-check data and resend.");
+    else res.render('server', {
+      name: 'Please re-check data and resend.'
+    });
   });
-  //res.send(req.body+"Deleted!!!");
 });
 
 serv.post("/edit", (req, res) => {
@@ -74,10 +80,12 @@ serv.post("/edit", (req, res) => {
   var query = { "_id" : id,'title' : title, 'description' : desc };
   schema1.validate(query, function(err, result) {
     if (err === null) update.editter(query, res);
-    else res.send("Please re-check data and resend.");
+    else res.render('server', {
+      name: 'Please re-check data and resend.'
+    });
   });
-  //res.send(req.body+"Record Updated!!!")
 });
+
 
 serv.unlink("/disconn", (req, res) => {
   res.send("Disconnected!!!");

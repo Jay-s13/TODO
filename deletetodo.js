@@ -18,8 +18,9 @@ exports.deleterec=function(arg,res){
                     if(err) throw err;
                     if(result[0]==null)
                     {
-                        console.log("Record for requested id does not exist!")
-                        res.send("Record for requested id does not exist!");
+                        res.render('server', {
+                            name: 'Requested id to be deleted does not exist.'
+                          });
                     }
                     else
                     {
@@ -31,8 +32,9 @@ exports.deleterec=function(arg,res){
         }
         else
         {   
-            console.log("Please re-enter id!!!")
-            res.send("Please re-enter id!!!");
+            res.render('server', {
+                name: 'Please re-enter id!'
+              });
         }
 }
 var x=function(){
@@ -51,7 +53,9 @@ var x=function(){
         dbo.collection("tododb").deleteOne(myquery,function(err,result){
             if (err) throw err;
             console.log("Deleted\n");
-            res.send("Deleted!!!");
+            res.render('server', {
+                name: 'Record Deleted!'
+              });
             updater();
         });
         db.close();
