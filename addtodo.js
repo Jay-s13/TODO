@@ -7,7 +7,7 @@ exports.adder=function(argument,res)
     var description=argument.description;
     var date = new Date().toLocaleString();
     var query;
-        Mongoclient.connect("mongodb://localhost:27017/tododb",function(err,db){
+        Mongoclient.connect("mongodb://todouser:doto1323@localhost:27017/tododb",function(err,db){
         if (err) throw err;
         var dbo=db.db("tododb");
         dbo.collection("tododb").find({},{"_id":1}).sort({"_id":-1}).limit(1).toArray(function(err, result1) {
@@ -26,7 +26,7 @@ exports.adder=function(argument,res)
         });
         db.close();
     });
-    var writedata=function(){Mongoclient.connect("mongodb://localhost:27017/tododb",function(err,db){
+    var writedata=function(){Mongoclient.connect("mongodb://todouser:doto1323@localhost:27017/tododb",function(err,db){
         if (err) throw err;
         var dbo=db.db("tododb");
         query={ '_id': id1, 'title' : title , 'description' : description , 'time' : date };
