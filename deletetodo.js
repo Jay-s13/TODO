@@ -8,7 +8,7 @@ exports.deleterec=function(arg,res){
     var checker=function(){
         if(delid!=0 && Number.isInteger(delid))
         {
-            Mongoclient.connect("mongodb://todouser:doto1323@localhost:27017/tododb",function(err,db)
+            Mongoclient.connect("mongodb://todouser:doto1323@mongodb_server:27017/tododb",function(err,db)
             {
                 if(err) throw err;
                 var dbo=db.db("tododb");
@@ -44,7 +44,7 @@ var x=function(){
     console.log(delid);
     checker(); 
 };
-    var del=function(){Mongoclient.connect("mongodb://todouser:doto1323@localhost:27017/tododb",function(err,db){
+    var del=function(){Mongoclient.connect("mongodb://todouser:doto1323@mongodb_server:27017/tododb",function(err,db){
         if(err) throw err;
         var dbo=db.db("tododb");
         ++delid;
@@ -63,7 +63,7 @@ var x=function(){
     };
 
     var funx=function(){
-        Mongoclient.connect("mongodb://todouser:doto1323@localhost:27017/tododb",function(err,db){
+        Mongoclient.connect("mongodb://todouser:doto1323@mongodb_server:27017/tododb",function(err,db){
         if(err) throw err;
         var dbo=db.db("tododb");
         var temp=delid;
@@ -86,7 +86,7 @@ var x=function(){
         db.close();
     })};
     var funx2=function(){
-        Mongoclient.connect("mongodb://todouser:doto1323@localhost:27017/tododb",function(err,db){
+        Mongoclient.connect("mongodb://todouser:doto1323@mongodb_server:27017/tododb",function(err,db){
         if(err) throw err;
         var dbo=db.db("tododb");
         dbo.collection("tododb").deleteOne({'_id':delid},function(err,result4){
@@ -96,7 +96,7 @@ var x=function(){
         db.close();
     })};
     var funx3=function(){
-        Mongoclient.connect("mongodb://todouser:doto1323@localhost:27017/tododb",function(err,db){
+        Mongoclient.connect("mongodb://todouser:doto1323@mongodb_server:27017/tododb",function(err,db){
         if(err) throw err;
         var dbo=db.db("tododb");
         dbo.collection("tododb").insertOne(query,function(err,result3){
@@ -113,7 +113,7 @@ var x=function(){
         });
         db.close();
     })};
-    var updater=function(){Mongoclient.connect("mongodb://todouser:doto1323@localhost:27017/tododb",function(err,db){
+    var updater=function(){Mongoclient.connect("mongodb://todouser:doto1323@mongodb_server:27017/tododb",function(err,db){
         if(err) throw err;
         var idlast=0;
         var dbo=db.db("tododb");

@@ -14,7 +14,7 @@ exports.editter=function(arg,res){var Mongoclient=require('mongodb').MongoClient
     var checker=function(){
             if(id!=0 && typeof(id)!=ok)
             {
-                Mongoclient.connect("mongodb://todouser:doto1323@localhost:27017/tododb",function(err,db)
+                Mongoclient.connect("mongodb://todouser:doto1323@mongodb_server:27017/tododb",function(err,db)
                 {
                     if(err) throw err;
                     var dbo=db.db("tododb");
@@ -50,7 +50,7 @@ exports.editter=function(arg,res){var Mongoclient=require('mongodb').MongoClient
 
 
 
-    var edit=function(){Mongoclient.connect("mongodb://todouser:doto1323@localhost:27017/tododb",function(err,db){
+    var edit=function(){Mongoclient.connect("mongodb://todouser:doto1323@mongodb_server:27017/tododb",function(err,db){
         if (err) throw err;
         var dbo=db.db("tododb");
         upquery1={ '_id': id}

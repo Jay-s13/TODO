@@ -3,7 +3,7 @@ var id=0;
 var disp;
 exports.showdb=function(callback,res){
     
-    Mongoclient.connect("mongodb://todouser:doto1323@localhost:27017/tododb",(err,db)=>{
+    Mongoclient.connect("mongodb://todouser:doto1323@mongodb_server:27017/tododb",(err,db)=>{
         if(err) throw err;
         var dbo=db.db("tododb");
         console.log("Displaying!\n");
